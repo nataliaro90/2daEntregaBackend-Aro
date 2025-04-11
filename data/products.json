@@ -1,0 +1,28 @@
+[
+  {
+    "id": 2,
+    "title": "Mate",
+    "description": "Mate de calabaza con virola de aluminio",
+    "code": "MATE001",
+    "price": 1500,
+    "status": true,
+    "stock": 25,
+    "category": "accesorios",
+    "thumbnails": [
+      "img/mate.jpg"
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Termo Stanley",
+    "description": "Termo de acero inoxidable 1L",
+    "code": "TERMO001",
+    "price": 28000,
+    "status": true,
+    "stock": 20,
+    "category": "termos",
+    "thumbnails": [
+      "img/termo.jpg"
+    ]
+  }
+]
