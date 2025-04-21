@@ -1,4 +1,3 @@
-// src/managers/ProductManager.js
 const fs = require('fs').promises;
 const path = require('path');
 
@@ -46,7 +45,7 @@ class ProductManager {
     const index = products.findIndex(product => product.id === parseInt(id));
     if (index === -1) return null;
 
-    delete updatedFields.id; // evitar que se sobrescriba el ID
+    delete updatedFields.id;
     products[index] = { ...products[index], ...updatedFields };
     await this.saveProducts(products);
     return products[index];
