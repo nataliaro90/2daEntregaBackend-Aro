@@ -1,4 +1,3 @@
-// src/routes/carts.router.js
 const express = require('express');
 const CartManager = require('../managers/CartManager');
 const ProductManager = require('../managers/ProductManager');
@@ -58,3 +57,4 @@ router.post('/:cid/product/:pid', async (req, res) => {
 });
 
 module.exports = router;
+

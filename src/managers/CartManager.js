@@ -1,57 +1,43 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
 
-const CARTS_PATH = path.join(__dirname, '../../data/carts.json');
-
 class CartManager {
-  // Leer todos los carritos
-  async getCarts() {
-    try {
-      const data = await fs.readFile(CARTS_PATH, 'utf-8');
-      return data ? JSON.parse(data) : [];
-    } catch (error) {
-      // Si el archivo no existe o está vacío, devolver array vacío
-      return [];
+  constructor() {
+    this.cartFilePath = path.join(__dirname, '../data/carts.json');
+    this.carts = [];
+    this.loadCarts();
+  }
+
+  loadCarts() {
+    if (fs.existsSync(this.cartFilePath)) {
+      const fileData = fs.readFileSync(this.cartFilePath, 'utf-8');
+      this.carts = JSON.parse(fileData);
     }
   }
 
-  // Crear un nuevo carrito
+  saveCarts() {
+    fs.writeFileSync(this.cartFilePath, JSON.stringify(this.carts, null, 2), 'utf-8');
+  }
+
   async createCart() {
-    const carts = await this.getCarts();
-    const newCart = {
-      id: carts.length ? carts[carts.length - 1].id + 1 : 1,
-      products: []
-    };
-    carts.push(newCart);
-    await fs.writeFile(CARTS_PATH, JSON.stringify(carts, null, 2));
+    const newCart = { id: this.carts.length + 1, products: [] };
+    this.carts.push(newCart);
+    this.saveCarts();
     return newCart;
   }
 
-  // Obtener carrito por ID
   async getCartById(id) {
-    const carts = await this.getCarts();
-    return carts.find(c => c.id === Number(id));
+    return this.carts.find((cart) => cart.id === id);
   }
 
-  // Agregar producto a carrito
   async addProductToCart(cartId, productId) {
-    const carts = await this.getCarts();
-    const cart = carts.find(c => c.id === Number(cartId));
-    if (!cart) return null;
-
-    const existingProduct = cart.products.find(p => p.product === Number(productId));
-
-    if (existingProduct) {
-      existingProduct.quantity++;
-    } else {
-      cart.products.push({
-        product: Number(productId),
-        quantity: 1
-      });
+    const cart = await this.getCartById(cartId);
+    if (cart) {
+      cart.products.push({ productId, quantity: 1 });
+      this.saveCarts();
+      return cart;
     }
-
-    await fs.writeFile(CARTS_PATH, JSON.stringify(carts, null, 2));
-    return cart;
+    return null;
   }
 }
 

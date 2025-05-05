@@ -1,19 +1,4 @@
-# Node modules
 node_modules/
-
-# Logs
-logs
-*.log
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
-
-# dotenv environment files
 .env
-
-# Editor configs
-.vscode/
-.idea/
-
-# Mac system files
+*.log
 .DS_Store

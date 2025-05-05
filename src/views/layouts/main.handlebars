@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Productos</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .product {
+      margin-bottom: 20px;
+      padding: 10px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+    }
+    .product h3 {
+      margin: 0;
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+  <h1>Lista de Productos</h1>
+  <div>
+    {{#each products}}
+      <div class="product">
+        <h3>{{title}}</h3>
+        <p>Precio: ${{price}}</p>
+        <p>{{description}}</p>
+        <p>Stock: {{stock}}</p>
+      </div>
+    {{else}}
+      <p>No hay productos disponibles.</p>
+    {{/each}}
+  </div>
+</body>
+</html>
+
