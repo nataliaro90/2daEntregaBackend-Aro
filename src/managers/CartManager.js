@@ -20,20 +20,30 @@ class CartManager {
   }
 
   async createCart() {
-    const newCart = { id: this.carts.length + 1, products: [] };
+    const newId = this.carts.length > 0
+      ? Math.max(...this.carts.map(c => c.id)) + 1
+      : 1;
+
+    const newCart = { id: newId, products: [] };
     this.carts.push(newCart);
     this.saveCarts();
     return newCart;
   }
 
   async getCartById(id) {
-    return this.carts.find((cart) => cart.id === id);
+    const numericId = Number(id);
+    return this.carts.find((cart) => cart.id === numericId);
   }
 
   async addProductToCart(cartId, productId) {
     const cart = await this.getCartById(cartId);
     if (cart) {
-      cart.products.push({ productId, quantity: 1 });
+      const existingProduct = cart.products.find((p) => p.productId === productId);
+      if (existingProduct) {
+        existingProduct.quantity += 1;
+      } else {
+        cart.products.push({ productId, quantity: 1 });
+      }
       this.saveCarts();
       return cart;
     }
